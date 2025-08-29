@@ -1,7 +1,7 @@
 package com.project.cabconnect.cab;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,15 +11,21 @@ public class CabService {
     @Autowired
     CabRepository cabRepository;
     //ArrayList<Cab> allcab=new ArrayList<>();
-    public Cab addCab(int cabId,String vehicleNumber,String model,int seat,int driverId)
+    public Cab addCab(Cab cab)
     {
-        Cab c1=new Cab(vehicleNumber, model, seat, driverId);
-        //allcab.add(c1);
-        return cabRepository.save(c1);
+        return cabRepository.findByVehicleNumber(cab.getvehicleNumber()).orElseGet(()->cabRepository.save(cab));
     }
-    public List<Cab> getAllCab()
+    public List<Cab> getAllCabs()
     {
         return cabRepository.findAll();
+    }
+    public Cab getByDriverId(int driverId)
+    {
+        return cabRepository.findByDriverId(driverId);
+    }
+    public Optional<Cab> getCabById(int cabId)
+    {
+        return cabRepository.findById(cabId);
     }
 
 }
