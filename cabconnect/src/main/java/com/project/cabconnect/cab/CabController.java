@@ -1,7 +1,6 @@
 package com.project.cabconnect.cab;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +26,19 @@ public class CabController {
     {
         return cabService.addCab(cab);
     }
+    // @GetMapping("/{id}")
+    // public Optional<Cab> getCabById(@PathVariable int cabid)
+    // {
+    //     return cabService.getCabById(cabid);
+    // }
     @GetMapping("/{id}")
-    public Optional<Cab> getCabById(@PathVariable int cabid)
+    public ResponseEntity<List<Cab>> getCabById(@PathVariable int cabId)
     {
-        return cabService.getCabById(cabid);
+        return ResponseEntity.ok(cabService.getCabById(cabId));
+    }
+    @GetMapping("/num")
+    public ResponseEntity<Cab> getCabByNumber()
+    {
+        return ResponseEntity.ok(cabService.getCabByVehicleNumber("UP32ES0368"));
     }
 }

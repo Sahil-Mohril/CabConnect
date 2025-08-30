@@ -1,7 +1,6 @@
 package com.project.cabconnect.cab;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,13 @@ public class CabService {
     {
         return cabRepository.findByDriverId(driverId);
     }
-    public Optional<Cab> getCabById(int cabId)
+    public List<Cab> getCabById(int cabId)
     {
         return cabRepository.findById(cabId);
+    }
+    public Cab getCabByVehicleNumber(String vehicleNumber)
+    {
+        return cabRepository.findByNumber(vehicleNumber);
     }
 
 }

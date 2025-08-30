@@ -1,13 +1,16 @@
 package com.project.cabconnect.cab;
 
+import com.project.cabconnect.driver.Driver;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-
 @Entity
 @Table(name="Cab",
        uniqueConstraints={@UniqueConstraint(
@@ -23,14 +26,20 @@ public class Cab {
     private String vehicleNumber;
     private String model;
     private int seat;
-    private int driverId;
+    @OneToOne
+    @JoinColumn(
+        name="driverId",
+        referencedColumnName="driverId"
+    )
+    private Driver driver;
     public Cab(){}
-    public Cab(String vehicleNumber,String model,int seat,int driverId)
+    public Cab(String vehicleNumber,String model,int seat,Driver driver)
     {
         this.vehicleNumber=vehicleNumber;
         this.model=model;
         this.seat=seat;
-        this.driverId=driverId;
+        // this.driverId=driverId;
+        this.driver=driver;
     }
      public Integer getCabId() {
         return cabId;
@@ -51,10 +60,14 @@ public class Cab {
     {
         return this.seat;
     }
-    public int getDriverId()
+    public Driver getDriver()
     {
-        return this.driverId;
+        return this.driver;
     }
+    // public int getDriverId()
+    // {
+    //     return this.driverId;
+    // }
     // @Override
     // public String toString()
     // {
