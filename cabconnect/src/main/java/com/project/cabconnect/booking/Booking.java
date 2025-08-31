@@ -1,0 +1,75 @@
+package com.project.cabconnect.booking;
+
+import java.time.LocalDateTime;
+
+import com.project.cabconnect.cab.Cab;
+import com.project.cabconnect.user.User;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
+@Entity
+@Table(name="Booking",uniqueConstraints={@UniqueConstraint(name="uniquebooking",columnNames={"bookingId"})})
+public class Booking {
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    private int bookingId;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(
+        name="userId",
+        referencedColumnName="userId"
+    )
+    private User user;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(
+        name="cabId",
+        referencedColumnName="cabId"
+    )
+    private Cab cab;
+    private double startLat;
+    private double startLong;
+    private double endLat;
+    private double endLong;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition="varchar(20)")
+    private BookingStatus bookingStatus;
+
+    public Booking(){}
+    public Booking(User user,Cab cab,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime, LocalDateTime endTime)
+    {
+        this.user=user;
+        this.cab=cab;
+        this.startLat=startLat;
+        this.startLong=startLong;
+        this.endLat=endLat;
+        this.endLong=endLong;
+        this.startTime=startTime;
+        this.endTime=endTime;
+    }
+    public User getUser()
+    {
+        return this.user;
+    }
+    public Cab getCab()
+    {
+        return this.cab;
+    }
+    public int getBookindId()
+    {
+        return this.bookingId;
+    }
+
+
+}

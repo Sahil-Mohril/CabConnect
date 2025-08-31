@@ -35,7 +35,7 @@ public class Cab {
     )
     private Driver driver;
     @Enumerated(EnumType.STRING)
-    @Column(nullable=false)
+    @Column(columnDefinition="varchar(100)",nullable=false)
     private CabStatus status=CabStatus.AVAILABLE;
     public Cab(){}
     public Cab(String vehicleNumber,String model,int seat,Driver driver)
@@ -45,6 +45,15 @@ public class Cab {
         this.seat=seat;
         // this.driverId=driverId;
         this.driver=driver;
+    }
+    public Cab(String vehicleNumber,String model,int seat,Driver driver,CabStatus cabStatus)
+    {
+        this.vehicleNumber=vehicleNumber;
+        this.model=model;
+        this.seat=seat;
+        // this.driverId=driverId;
+        this.driver=driver;
+        this.status=cabStatus;
     }
      public Integer getCabId() {
         return cabId;
@@ -68,6 +77,14 @@ public class Cab {
     public Driver getDriver()
     {
         return this.driver;
+    }
+    public CabStatus getCabStatus()
+    {
+        return this.status;
+    }
+    public void setCabStatus(CabStatus status)
+    {
+        this.status=status;
     }
     // public int getDriverId()
     // {
