@@ -1,4 +1,4 @@
-package com.project.cabconnect.driver;
+package com.project.cabconnect.user;
 
 import java.util.List;
 
@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/driver")
-public class DriverController {
+@RequestMapping("/user")
+public class UserController {
     @Autowired
-    private DriverRepository driverRepository;
+    private UserRepository userRepository;
     @Autowired
-    private DriverService driverService;
+    private UserService userService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Driver>> getAllDrivers()
+    public ResponseEntity<List<User>> getAllUsers()
     {
-        return ResponseEntity.ok(driverService.getAllDrivers());
+        return ResponseEntity.ok(userService.getAllUsers());
         
     }
 
 }
+

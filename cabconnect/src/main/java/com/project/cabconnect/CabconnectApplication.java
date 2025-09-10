@@ -9,6 +9,8 @@ import com.project.cabconnect.cab.CabService;
 import com.project.cabconnect.cab.CabStatus;
 import com.project.cabconnect.driver.Driver;
 import com.project.cabconnect.driver.DriverService;
+import com.project.cabconnect.user.UserService;
+import com.project.cabconnect.user.*;
 
 import jakarta.annotation.PostConstruct;
 
@@ -20,6 +22,8 @@ public class CabconnectApplication {
 	CabService cabService;
 	@Autowired
 	DriverService driverService;
+	@Autowired
+	UserService userService;
 	public static void main(String[] args) {
 		SpringApplication.run(CabconnectApplication.class, args);
 		
@@ -37,14 +41,25 @@ public class CabconnectApplication {
 		Cab c1=new Cab("UP32NK5956","Swift Dezire",5,d1);
 		Cab c2=new Cab("UP32ES0368","Hyundai i20",5,d2);
 		Cab c3=new Cab("MP04AB4564","Toyota Innova",7,d3,CabStatus.BOOKED);
-		cabService.addCab(c1);
-		cabService.addCab(c2);
-		cabService.addCab(c3);
+		c1=cabService.addCab(c1);
+		c2=cabService.addCab(c2);
+		c3=cabService.addCab(c3);
 		//cabService.addCab(new Cab("UP32BH7879","Maruti WagonR",5,2123));
 		//cabService.getByDriverId(1234);
 		cabService.getCabById(302);
 		cabService.getCabByVehicleNumber("UP32ES0368");
-		//cabService.setCabStatus(c2, CabStatus.ON_TRIP);
+		cabService.setStatus(c3, CabStatus.OFFLINE);
+		// System.out.println("CAB ID"+c3.getCabId());
+		cabService.setCabLocation(c3, 2.18, 7.90);
+		cabService.setCabLocation(c2, 3.14, 8.99);
+		cabService.setCabLocation(c1, 1.9, 2.44);
+		
+		User u1=new User("Prakrit Bahl","+9123244221","prakrit@gmail.com");
+		User u2=new User("Saksham Mishra","+9189972013","sakshammishra@gmail.com");
+		User u3=new User("MS Dhoni","+91778787787","dhoni7@gmail.com");
+		userService.addUser(u1);
+		userService.addUser(u2);
+		userService.addUser(u3);
 		
 		
 	}

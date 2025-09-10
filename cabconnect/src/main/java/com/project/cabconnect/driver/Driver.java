@@ -1,7 +1,12 @@
 package com.project.cabconnect.driver;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +19,8 @@ import jakarta.persistence.UniqueConstraint;
             name="unique_licence",
             columnNames = {"licenseNumber"}
         )})
+@Configuration
+@EnableTransactionManagement
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,7 +32,9 @@ public class Driver {
     private String licenseNumber;
     @Column(nullable = false)
     private String mobileNumber;
-    private Rating rating;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition="varchar(100)")
+    private Rating rating=Rating.FOUR_STAR;
 
     public Driver() {}
     public Driver(String driverName,int age,String licenseNumber,String mobileNumber)

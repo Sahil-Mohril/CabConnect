@@ -18,17 +18,31 @@ public interface CabRepository extends  JpaRepository<Cab, Integer> {
     Cab findByDriverId(int driverId);
 
     Optional<Cab>  findByVehicleNumber(String vehicleNumber);
-    //Optional<Cab> findById(int cabid);
+    //Optional<Cab findById(int cabid);
 
     @Query("select c from Cab c where c.cabId=?1")
     List<Cab> findById(int cabid);
+    // @Query("select c from Cab c where c.cabId=?1")
+    // Cab findCabById(int cabid);
+
     @Query("select c from Cab c where c.vehicleNumber=?1")
     Cab findByNumber(String VehicleNumber);
 
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Transactional
     @Query(value="update cab set status=:cabStatus where cab_id=:cabId",
             nativeQuery=true)
      int updateCabStatus(@Param("cabId")int cabId,@Param("cabStatus")String cabStatus);
+    
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Transactional
+    @Query(value="update cab set cab_lat=:lat,cab_long=:lon where cab_id=:cabId",
+    nativeQuery=true)    
+    int updateCabLocation(@Param("cabId")int cabId,@Param("lat")double lat,@Param("lon")double lon);
+
+    @Query("select c from Cab c where c.cabId=?1")
+    Cab findCabById(int cabid);
+
     
 }

@@ -21,13 +21,14 @@ public class User {
     @Column(name="emailId",nullable=false)
     private String userMailId;
     @Column(name="password",nullable=false)
-    private String userPassword;
+    private String userPassword="********";
     private String userName;
     private String userMobileNumber;
+    private double userLat=0.0;
+    private double userLong=0.0;
     
-
-    public User(int userId, String userName, String userMobileNumber, String userMailId) {
-        this.userId = userId;
+    public User(){}
+    public User( String userName, String userMobileNumber, String userMailId) {
         this.userName = userName;
         this.userMobileNumber = userMobileNumber;
         this.userMailId = userMailId;
@@ -36,5 +37,25 @@ public class User {
     public int getuserId()
     {
         return this.userId;
+    }
+    public String getUserName()
+    {
+        return this.userName;
+    }
+    public String getEmailId()
+    {
+        return this.userMailId;
+    }
+    public String getUserMobileNumber()
+    {
+        return this.userMobileNumber;
+    }
+    public double getUserLat()
+    {
+        return this.userLat;
+    }
+    public double getUserLong()
+    {
+        return this.userLong;
     }
 }

@@ -47,16 +47,20 @@ public class Booking {
     private BookingStatus bookingStatus;
 
     public Booking(){}
-    public Booking(User user,Cab cab,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime, LocalDateTime endTime)
+    public Booking(User user,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime, LocalDateTime endTime)
     {
         this.user=user;
-        this.cab=cab;
         this.startLat=startLat;
         this.startLong=startLong;
         this.endLat=endLat;
         this.endLong=endLong;
         this.startTime=startTime;
         this.endTime=endTime;
+        //this.cab=BookingService.getNearestCab(user);
+    }
+    public int getBookingId()
+    {
+        return this.bookingId;
     }
     public User getUser()
     {

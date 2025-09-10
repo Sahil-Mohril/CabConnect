@@ -1,5 +1,10 @@
 package com.project.cabconnect.cab;
 
+import java.time.LocalDateTime;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import com.project.cabconnect.driver.Driver;
 
 import jakarta.persistence.Column;
@@ -19,6 +24,8 @@ import jakarta.persistence.UniqueConstraint;
         name="vehicleNumber_unique",
         columnNames={"vehicleNumber"}
        )})
+@Configuration
+@EnableTransactionManagement
 public class Cab {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
@@ -37,6 +44,10 @@ public class Cab {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition="varchar(100)",nullable=false)
     private CabStatus status=CabStatus.AVAILABLE;
+
+    private LocalDateTime timestamp=LocalDateTime.now();
+    private double cabLat;
+    private double cabLong;
     public Cab(){}
     public Cab(String vehicleNumber,String model,int seat,Driver driver)
     {
@@ -55,8 +66,8 @@ public class Cab {
         this.driver=driver;
         this.status=cabStatus;
     }
-     public Integer getCabId() {
-        return cabId;
+     public int getCabId() {
+        return this.cabId;
     }
 
     public void setCabId(Integer cabId) {
@@ -86,6 +97,12 @@ public class Cab {
     {
         this.status=status;
     }
+    // public void setCabLocation(double lat,double lon)
+    // {
+    //     this.tm
+    //     this.cabLat=lat;
+    //     this.cabLong=lon;
+    // } 
     // public int getDriverId()
     // {
     //     return this.driverId;
