@@ -11,7 +11,9 @@ public class UserService {
     UserRepository userRepository;
     public User addUser(User user)
     {
-        return userRepository.findByUserMailId(user.getEmailId()).orElseGet(()->userRepository.save(user));
+        if(userRepository.existsByEmailId(user.getEmailId()))
+        return userRepository.findByEmailId(user.getEmailId()).get();
+        return userRepository.save(user);
     }
     public List<User> getAllUsers()
     {

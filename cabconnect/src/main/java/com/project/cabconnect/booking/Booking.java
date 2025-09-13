@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import com.project.cabconnect.cab.Cab;
 import com.project.cabconnect.user.User;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,13 +23,13 @@ public class Booking {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int bookingId;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(
         name="userId",
         referencedColumnName="userId"
     )
     private User user;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(
         name="cabId",
         referencedColumnName="cabId"

@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private int userId;
     @Column(name="emailId",nullable=false)
-    private String userMailId;
+    private String emailId;
     @Column(name="password",nullable=false)
     private String userPassword="********";
     private String userName;
@@ -31,7 +31,7 @@ public class User {
     public User( String userName, String userMobileNumber, String userMailId) {
         this.userName = userName;
         this.userMobileNumber = userMobileNumber;
-        this.userMailId = userMailId;
+        this.emailId = userMailId;
     }
 
     public int getuserId()
@@ -44,7 +44,7 @@ public class User {
     }
     public String getEmailId()
     {
-        return this.userMailId;
+        return this.emailId;
     }
     public String getUserMobileNumber()
     {
