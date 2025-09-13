@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+
+
+body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+
+}
+
+.cab-container {
+    background-color: white;
+    width: 300px;
+    padding: 30px;
+    border: 1px solid rgb(218, 140, 14);
+    text-align: center;
+}
