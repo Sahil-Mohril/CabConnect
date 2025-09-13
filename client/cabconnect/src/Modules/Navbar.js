@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo2 from './logo2.png';
 //import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export default function NavBar() {
     const [profileopen, showprofile] = useState(false);
@@ -8,7 +9,7 @@ export default function NavBar() {
         <div className="Navbar">
             {/* <div className="logo"><img src="logo.png" /></div> */}
             <div className="Nav-contents">
-                <div className="logo"></div>
+                <div className="logo2"><img src={logo2} /></div>
                 <a href=""></a>
                 <a href=""></a>
                 <button className="profile" onClick={() => showprofile(!profileopen)}></button>
