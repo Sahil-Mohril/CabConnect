@@ -97,6 +97,14 @@ public class Cab {
     {
         this.status=status;
     }
+    public double getLatitude()
+    {
+        return this.cabLat;
+    }
+    public double getLongitude()
+    {
+        return this.cabLong;
+    }
     // public void setCabLocation(double lat,double lon)
     // {
     //     this.tm

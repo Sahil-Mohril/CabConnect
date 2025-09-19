@@ -1,5 +1,6 @@
 package com.project.cabconnect.cab;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,14 @@ public class CabController {
     {
         return ResponseEntity.ok(cabService.getCabById(id));
 
+    }
+    @GetMapping("/location")
+    public ResponseEntity<List<LocationDTO>> getCabLocation()
+    {
+        List<Cab> cabs=cabService.getAllCabs();
+        List<LocationDTO> location=new ArrayList<>();
+        for(int i=0;i<cabs.size();i++)
+        location.add(new LocationDTO(cabs.get(i).getCabId(),cabs.get(i).getLatitude(),cabs.get(i).getLongitude()));
+        return ResponseEntity.ok(location);
     }
 }

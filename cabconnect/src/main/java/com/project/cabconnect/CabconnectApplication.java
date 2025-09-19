@@ -56,9 +56,9 @@ public class CabconnectApplication {
 		cabService.getCabByVehicleNumber("UP32ES0368");
 		cabService.setStatus(c3, CabStatus.OFFLINE);
 		// System.out.println("CAB ID"+c3.getCabId());
-		cabService.setCabLocation(c3, 2.18, 7.90);
-		cabService.setCabLocation(c2, 3.14, 8.99);
-		cabService.setCabLocation(c1, 1.9, 2.44);
+		cabService.setCabLocation(c3, 12.967619, 79.157799);
+		cabService.setCabLocation(c2, 12.972863, 79.163075);
+		cabService.setCabLocation(c1, 12.967123, 79.138513);
 		
 		// User u1=new User("Prakrit Bahl","+9123244221","prakrit@gmail.com");
 		// User u2=new User("Saksham Mishra","+9189972013","sakshammishra@gmail.com");
@@ -74,8 +74,11 @@ public class CabconnectApplication {
 		 User u3=userService.addUser(new User("MS Dhoni","+91778787787","dhoni7@gmail.com"));
 
     Booking b2 = new Booking(u3, 1.18, 2.56, 1.02, 1.21, LocalDateTime.now(), LocalDateTime.now().plusHours(3));
+	Booking b1 = new Booking(u1, 1.10, 2.56, 1.02, 1.25, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
     bookingService.addBooking(b2);
+	bookingService.addBooking(b1);
+	userService.updateUserLocation(102,12.966, 79.1571);
 		
 	}
 

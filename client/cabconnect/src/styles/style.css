@@ -26,7 +26,7 @@ body {
     gap: 20px;
     width: 500px;
     height: 300px;
-    color: #6ece33;
+    color: rgb(110, 206, 51);
     margin: 0;
     cursor: pointer;
 }
@@ -106,25 +106,12 @@ body {
     margin: 6px 0;
 }
 
-/* Divider */
 .l1 {
     border: none;
     border-top: 1px solid #ddd;
     margin: 10px 0;
 }
 
-/* Fade animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 
 .layout {
@@ -138,9 +125,9 @@ body {
 
 .left {
     width: 50%;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
+    position: relative;
+    /* justify-content: center; */
+    /* align-items: center; */
     background-color: #1e1e2f;
     color: #ffffff;
     display: flex;
@@ -162,17 +149,20 @@ body {
     border: 1px solid wheat;
 } */
 .logo {
-    width: 100%;
+    width: 300px;
     display: flex;
+    margin-top: 50px;
     justify-content: center;
     position: relative;
+    margin-bottom: 30px;
 
 }
 
 .logo img {
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     align-self: center;
+
 }
 
 
@@ -187,17 +177,7 @@ body {
 
 
 
-@media (max-width: 900px) {
-    .layout {
-        flex-direction: column;
-    }
 
-    .left,
-    .map {
-        width: 100%;
-        height: 50%;
-    }
-}
 
 .button {
     border: 1px solid #6ece33;
@@ -208,6 +188,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .button p {
@@ -234,7 +215,6 @@ body {
     height: 100%;
     z-index: 0;
     border-radius: 5%;
-    /* Fit exactly inside .map */
 }
 
 .map {
@@ -245,4 +225,13 @@ body {
     position: relative;
     margin-bottom: 20px;
     border-radius: 5%;
+}
+
+.booking-window {
+    border: 1px solid wheat;
+    padding: 30px;
+}
+
+.booking-window label {
+    font-size: 1.3rem;
 }

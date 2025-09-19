@@ -19,4 +19,12 @@ public class UserService {
     {
         return userRepository.findAll();
     }
+    // public Optional<User> getCurrentUser(int userId)
+    // {
+    //     return userRepository.findByUserId(userId);
+    // }
+    public int updateUserLocation(int userId,double lat,double lng)
+    {
+        return userRepository.updateUserLocation(userId, lat, lng);
+    }
 }

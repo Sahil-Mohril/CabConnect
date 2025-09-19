@@ -20,6 +20,7 @@ public class CabService {
     public Cab addCab(Cab cab)
     {
         return cabRepository.findByVehicleNumber(cab.getvehicleNumber()).orElseGet(()->cabRepository.save(cab));
+
     }
     public List<Cab> getAllCabs()
     {
@@ -50,6 +51,10 @@ public class CabService {
     public int setCabLocation(Cab cab,double lat,double lon)
     {
         return cabRepository.updateCabLocation(cab.getCabId(), lat, lon);
+    }
+    public Cab getNearestCab(double lat,double lng)
+    {
+        return cabRepository.findNearestCab(lat, lng);
     }
 
 

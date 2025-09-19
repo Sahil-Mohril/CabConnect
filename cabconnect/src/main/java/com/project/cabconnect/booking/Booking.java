@@ -73,6 +73,21 @@ public class Booking {
     {
         return this.bookingId;
     }
-
+    public void setCab(Cab cab)
+    {
+        this.cab=cab;
+    }
+    public void setStatus(BookingStatus bookingStatus)
+    {
+        this.bookingStatus=bookingStatus;
+    }
+    public double getStartLat()
+    {
+        return this.startLat;
+    }
+    public double getStartLong()
+    {
+        return this.startLong;
+    }
 
 }
