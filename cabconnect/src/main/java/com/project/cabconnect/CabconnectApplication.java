@@ -72,6 +72,9 @@ public class CabconnectApplication {
 		 User u2 = userService.addUser(new User("Saksham Mishra", "+9189972013", "sakshammishra@gmail.com"));
 		 User u1=userService.addUser(new User("Prakrit Bahl","+9123244221","prakrit@gmail.com"));
 		 User u3=userService.addUser(new User("MS Dhoni","+91778787787","dhoni7@gmail.com"));
+		 userService.updateUserLocation(u3.getuserId(),  12.968045, 79.156126);// MS Dhoni Main GAte
+		 userService.updateUserLocation(u1.getuserId(),12.972560, 79.158891);//prakrit enzo
+		 userService.updateUserLocation(u2.getuserId(), 12.971590, 79.138268);//saksham katpadi jn
 
     Booking b2 = new Booking(u3, 1.18, 2.56, 1.02, 1.21, LocalDateTime.now(), LocalDateTime.now().plusHours(3));
 	Booking b1 = new Booking(u1, 1.10, 2.56, 1.02, 1.25, LocalDateTime.now(), LocalDateTime.now().plusHours(1));

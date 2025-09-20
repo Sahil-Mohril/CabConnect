@@ -28,7 +28,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.cabconnect.cab.CabService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class BookingService {
     @Autowired
      BookingRepository bookingRepository;
@@ -38,7 +41,9 @@ public class BookingService {
     public Booking addBooking(Booking booking) {
         double  userLat=booking.getUser().getUserLat();
         double userLong=booking.getUser().getUserLong();
-        booking.setCab(cabService.getNearestCab(booking.getStartLat(),booking.getStartLong()));
+        updateBookingStatus(booking.getUser().getuserId(),BookingStatus.COMPLETED);
+        booking.setCab(cabService.getNearestCab(userLat,userLong));
+        booking.setStatus(BookingStatus.ON_GOING);
         return bookingRepository.save(booking);
     }
 
@@ -53,5 +58,14 @@ public class BookingService {
 
     public void deleteBooking(int id) {
         bookingRepository.deleteById(id);
+    }
+    public Booking getCurrentBooking(int userid)
+    {
+        return bookingRepository.getCurrentBooking(userid);
+    }
+    @Transactional
+    public int updateBookingStatus(int userid,BookingStatus bookingStatus)
+    {
+        return bookingRepository.updateBookingStatus(userid,bookingStatus.toString());
     }
 }

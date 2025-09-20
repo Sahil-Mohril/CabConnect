@@ -44,7 +44,7 @@ public interface CabRepository extends  JpaRepository<Cab, Integer> {
     @Query("select c from Cab c where c.cabId=?1")
     Cab findCabById(int cabid);
 
-    @Query(value="select * from cab c order by sqrt(power(c.cab_lat-:lat,2)-power(c.cab_long-:lng,2)) limit 1",nativeQuery=true)
+    @Query(value="select * from cab c order by sqrt(power(c.cab_lat-:lat,2)+power(c.cab_long-:lng,2)) asc limit 1",nativeQuery=true)
     Cab findNearestCab(@Param("lat")double lat,@Param("lng")double lng);
     
 }
