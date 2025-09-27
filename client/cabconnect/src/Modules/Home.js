@@ -8,16 +8,25 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { getCabLocations } from "../services/CabController.js";
 import { getCurrentBooking } from "../services/BookingController.js";
+import { getUserLocation } from "../services/UserController.js";
 //import style from './styles/style.css'
 export default function Home() {
     const [center, setCenter] = useState({ lat: 12.968045, lng: 79.156126 });
+    const [userPos, setUserPos] = useState({ lat: 0.0, lng: 0.0 });
     const [cabpos, setcabpos] = useState([]);
     const [openBooking, setOpenBooking] = useState(false);
     const [showbooking, setShowBooking] = useState(false);
     const [booking, setBooking] = useState({});
     const ZOOM_LEVEL = 18;
     const mapRef = useRef();
-    useEffect(() => { fetchCabLocations(); }, []);
+    // useEffect(() => { fetchCabLocations(); fetchUserLocation(); }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetchCabLocations();
+            await fetchUserLocation();
+        };
+        fetchData();
+    }, []);
     const cabIcon = new L.Icon({
         iconUrl: CarLogo,
         iconSize: [45, 35],
@@ -38,6 +47,12 @@ export default function Home() {
         fetchCurentBooking();
         setShowBooking(true);
     }
+    const fetchUserLocation = async () => {
+        const data = await getUserLocation();
+        setUserPos(data);
+        return userPos;
+
+    }
     // const fetchNearestCab = async () => {
     //     const data = await getNearestCab();
     // }
@@ -45,6 +60,7 @@ export default function Home() {
     //     fetchNearestCab();
 
     // }
+
     return (<>
         <div className="layout">
             <div className="left">
@@ -59,8 +75,11 @@ export default function Home() {
                 </div>}
                 {openBooking && <div className="search-button" onClick={handleAddBooking}><p>Book Cab</p></div>}
                 {openBooking && showbooking && <div className="booking-card">
-                    <h2>Booking ID: {booking.bookingId}</h2>
+                    {console.log(booking)}
+                    <h2>{booking.cab?.driver?.driverName} is on his Way!!</h2>
+                    <h3>Booking ID: {booking.bookingId}</h3>
                     <h3>Cab</h3>
+                    <p><b>Cab Id:</b>{booking.cab?.cabId}</p>
                     <p><b>Model:</b> {booking.cab?.model}</p>
                     <p><b>Vehicle No:</b> {booking.cab?.vehicleNumber}</p>
 
@@ -72,7 +91,7 @@ export default function Home() {
             <div className="map">
                 <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
                     <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
-                    <Marker position={center} icon={userIcon}></Marker>
+                    <Marker position={center} icon={userIcon}><Popup>You are Here</Popup></Marker>
                     {cabpos.map((cab) => (
                         <Marker key={cab.id} position={[cab.latitude, cab.longitude]} icon={cabIcon}>
                             <Popup>Cab id: {cab.id}</Popup>
@@ -86,3 +105,5 @@ export default function Home() {
 
     </>)
 }
+
+

@@ -1,29 +1,29 @@
  package com.project.cabconnect.user;
 
 class LocationDTO {
-    private double latitude;
-    private double longitude;
+    private double lat;
+    private double lng;
     
-    public LocationDTO(double latitude,double longitude)
+    public LocationDTO(double lat,double lng)
     {
-        this.latitude=latitude;
-        this.longitude=longitude;
+        this.lat=lat;
+        this.lng=lng;
     }
     public double getLatitude()
     {
-        return latitude;
+        return lat;
     }
-    public void setLatitude(double latitude)
+    public void setLatitude(double lat)
     {
-        this.latitude=latitude;
+        this.lat=lat;
     }
     public double getLongitude()
     {
-        return this.longitude;
+        return this.lng;
     }
-    public void setLongitude(double longitude)
+    public void setLongitude(double lng)
     {
-        this.longitude=longitude;
+        this.lng=lng;
     }
     
 }
