@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useMap } from "react-leaflet";
 import logo from './logo.png'
 import CarLogo from './car.png';
 import UserLocation from './userlocation.png';
@@ -9,6 +10,8 @@ import L from "leaflet";
 import { getCabLocations } from "../services/CabController.js";
 import { getCurrentBooking } from "../services/BookingController.js";
 import { getUserLocation } from "../services/UserController.js";
+import Routing from "./Routing.js";
+//import Routing from "./Routing.js";
 //import style from './styles/style.css'
 export default function Home() {
     const [center, setCenter] = useState({ lat: 12.968045, lng: 79.156126 });
@@ -97,8 +100,7 @@ export default function Home() {
                             <Popup>Cab id: {cab.id}</Popup>
                         </Marker>
                     ))}
-
-
+                    <Routing />
                 </MapContainer>
             </div>
         </div >

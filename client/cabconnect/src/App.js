@@ -6,15 +6,21 @@ import AdminPage from './admin/AdminPage';
 import LoginPage from './User/login';
 import NavBar from './Modules/Navbar';
 import Home from './Modules/Home';
-
+import Routing from './Modules/Routing';
+import Map from './Modules/Map';
 
 function App() {
   return (<>
     <NavBar />
     <Home />
+    {/* <Routing /> */}
     {/* <AdminPage /> */}
+    {/* <Map /> */}
   </>
   );
 }
 
 export default App;
+
+
+
