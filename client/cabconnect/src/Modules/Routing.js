@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import { useMap } from "react-leaflet/hooks";
@@ -9,9 +9,10 @@ L.Marker.prototype.options.icon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
 });
 
-export default function Routing() {
+export default function Routing({ booking, cabpos }) {
     const map = useMap();
     const routingControlRef = useRef(null);
+    const [route, setRoute] = useState([])
 
     useEffect(() => {
         if (!map) return;
@@ -22,7 +23,7 @@ export default function Routing() {
                 map.removeControl(routingControlRef.current);
                 console.log(routingControlRef.current.getPlan())
             } catch (err) {
-                console.warn("Old routing control already removed:", err);
+                console.log("Old removeas already")
             }
             routingControlRef.current = null;
         }
@@ -39,6 +40,28 @@ export default function Routing() {
             draggableWaypoints: true,
         }).addTo(map);
 
+        control.on("routesfound", async (e) => {
+            const coordinates = e.routes[0].coordinates;
+            console.log("Route", coordinates);
+            setRoute(coordinates);
+
+            if (booking) {
+                const routeinfo = coordinates.map((coord, index) => ({ bookingId: 2702, waypoint: index, Lat: coord.lat, Lng: coord.lng }))
+                console.log(routeinfo);
+                try {
+                    const response = await axios.post("http://localhost:8080/route", routeinfo);
+                }
+                catch {
+                    console.log("error Homie");
+                }
+            }
+            console.log("cab location", cabpos);
+
+        });
+        // console.log("booking:", booking)
+
+
+
         routingControlRef.current = control;
         return () => {
             if (routingControlRef.current) {
@@ -46,13 +69,12 @@ export default function Routing() {
                     routingControlRef.current.getPlan().setWaypoints([]);
                     map.removeControl(routingControlRef.current);
                 } catch (err) {
-                    console.warn("Routing cleanup skipped:", err);
+                    console.log("clean skip");
                 } finally {
                     routingControlRef.current = null;
                 }
             }
         };
     }, [map]);
-    console.log(" Current routingControlRef:", routingControlRef.current._routes[0].coordinates);
     return null;
 }

@@ -100,7 +100,7 @@ export default function Home() {
                             <Popup>Cab id: {cab.id}</Popup>
                         </Marker>
                     ))}
-                    <Routing />
+                    <Routing booking={booking} cabpos={cabpos} />
                 </MapContainer>
             </div>
         </div >

@@ -36,13 +36,37 @@ public class Routing {
     {
         return this.booking.getBookindId();
     }
+    public void setId(RoutingId id)
+    {
+        this.id=id;
+    }
     public double getLatitude()
     {
         return this.Lat;
     }
+    public void setLat(double Lat)
+    {
+        this.Lat=Lat;
+    }
     public double getLongitude()
     {
         return this.Lng;
+    }
+    public void setLng(double Lng)
+    {
+        this.Lng=Lng;
+    }
+    public RoutingId getid()
+    {
+        return this.id;
+    }
+    public Booking getBooking()
+    {
+        return this.booking;
+    }
+    public void setBooking(Booking booking)
+    {
+        this.booking=booking;
     }
 }
 
