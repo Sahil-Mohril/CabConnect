@@ -46,7 +46,7 @@ public class Booking {
     private BookingStatus bookingStatus;
 
     public Booking(){}
-    public Booking(User user,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime, LocalDateTime endTime)
+     public Booking(User user,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime)
     {
         this.user=user;
         this.startLat=startLat;
@@ -54,6 +54,17 @@ public class Booking {
         this.endLat=endLat;
         this.endLong=endLong;
         this.startTime=startTime;
+        //this.cab=BookingService.getNearestCab(user);
+    }
+    public Booking(User user,double startLat,double startLong,double endLat,double endLong,LocalDateTime startTime, LocalDateTime endTime)
+    {
+        // this.user=user;
+        // this.startLat=startLat;
+        // this.startLong=startLong;
+        // this.endLat=endLat;
+        // this.endLong=endLong;
+        // this.startTime=startTime;
+        this(user,startLat,startLong,endLat,endLong,startTime);
         this.endTime=endTime;
         //this.cab=BookingService.getNearestCab(user);
     }
@@ -68,10 +79,6 @@ public class Booking {
     public Cab getCab()
     {
         return this.cab;
-    }
-    public int getBookindId()
-    {
-        return this.bookingId;
     }
     public void setCab(Cab cab)
     {
@@ -88,6 +95,14 @@ public class Booking {
     public double getStartLong()
     {
         return this.startLong;
+    }
+    public double getEndLat()
+    {
+        return this.endLat;
+    }
+    public double getEndLong()
+    {
+        return this.endLong;
     }
 
 }

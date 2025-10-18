@@ -27,4 +27,8 @@ public class UserService {
     {
         return userRepository.updateUserLocation(userId, lat, lng);
     }
+    public User getUserById(int userId)
+    {
+        return userRepository.findByUserId(userId);
+    }
 }

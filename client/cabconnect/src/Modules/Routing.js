@@ -9,11 +9,16 @@ L.Marker.prototype.options.icon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
 });
 
-export default function Routing({ booking, cabpos }) {
+export default function Routing({ booking, userPos }) {
     const map = useMap();
     const routingControlRef = useRef(null);
     const [route, setRoute] = useState([])
-
+    //console.log("booking details", booking.cab.latitude);
+    const cablat = booking?.cab?.latitude;
+    const cablong = booking?.cab?.longitude;
+    const userlat = userPos?.lat;
+    const userLong = userPos?.lng;
+    //console.log(cablat, cablong);
     useEffect(() => {
         if (!map) return;
 
@@ -27,11 +32,12 @@ export default function Routing({ booking, cabpos }) {
             }
             routingControlRef.current = null;
         }
-
+        console.log(cablat, cablong)
+        // console.log("cablocation", booking?.cab?.latitude);
         const control = L.Routing.control({
             waypoints: [
-                L.latLng(12.968045, 79.156126),
-                L.latLng(12.96, 79.156),
+                L.latLng(userlat, userLong),
+                L.latLng(cablat, cablong),
             ],
             routeWhileDragging: false,
             show: false,
@@ -44,7 +50,7 @@ export default function Routing({ booking, cabpos }) {
             const coordinates = e.routes[0].coordinates;
             console.log("Route", coordinates);
             setRoute(coordinates);
-
+            console.log(routingControlRef.current);
             if (booking) {
                 const routeinfo = coordinates.map((coord, index) => ({ bookingId: 2702, waypoint: index, Lat: coord.lat, Lng: coord.lng }))
                 console.log(routeinfo);
@@ -55,12 +61,12 @@ export default function Routing({ booking, cabpos }) {
                     console.log("error Homie");
                 }
             }
-            console.log("cab location", cabpos);
+            //console.log("cab location", cabpos);
 
         });
         // console.log("booking:", booking)
 
-
+        console.log(routingControlRef.current);
 
         routingControlRef.current = control;
         return () => {
@@ -75,6 +81,6 @@ export default function Routing({ booking, cabpos }) {
                 }
             }
         };
-    }, [map]);
+    }, [map, cablat, cablong]);
     return null;
 }

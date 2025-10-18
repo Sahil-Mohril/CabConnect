@@ -34,7 +34,7 @@ public class Routing {
     }
     public int getBookingId()
     {
-        return this.booking.getBookindId();
+        return this.booking.getBookingId();
     }
     public void setId(RoutingId id)
     {

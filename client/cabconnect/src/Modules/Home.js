@@ -8,14 +8,16 @@ import osm from "./osm-providers.js";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { getCabLocations } from "../services/CabController.js";
-import { getCurrentBooking } from "../services/BookingController.js";
+import { getCurrentBooking, postBookingDTO } from "../services/BookingController.js";
 import { getUserLocation } from "../services/UserController.js";
 import Routing from "./Routing.js";
 //import Routing from "./Routing.js";
 //import style from './styles/style.css'
 export default function Home() {
+    const userId = 504;
     const [center, setCenter] = useState({ lat: 12.968045, lng: 79.156126 });
     const [userPos, setUserPos] = useState({ lat: 0.0, lng: 0.0 });
+    const [destpos, setDestPos] = useState({ lat: 12.971590, lng: 79.138268 }) //Katpidi statiton
     const [cabpos, setcabpos] = useState([]);
     const [openBooking, setOpenBooking] = useState(false);
     const [showbooking, setShowBooking] = useState(false);
@@ -30,6 +32,14 @@ export default function Home() {
         };
         fetchData();
     }, []);
+    useEffect(() => {
+        if (mapRef.current && userPos.lat !== 0 && userPos.lng !== 0) {
+            const map = mapRef.current;
+            // if (map.flyTo) map.flyTo([userPos.lat, userPos.lng], ZOOM_LEVEL);
+            if (map.setView)
+                map.setView([userPos.lat, userPos.lng], ZOOM_LEVEL);
+        }
+    }, [userPos]);
     const cabIcon = new L.Icon({
         iconUrl: CarLogo,
         iconSize: [45, 35],
@@ -46,14 +56,55 @@ export default function Home() {
         const data = await getCurrentBooking();
         setBooking(data);
     }
-    const handleAddBooking = () => {
+    // const sethello = async () => {
+    //     const data = await hello();
+    // }
+    // const createBooking = async () => {
+    //     const userData = await getUserLocation();
+
+    //     setUserPos(userData);
+    //     const bookingDTO = {
+    //         userId: userId,
+    //         startLat: userPos.lat,
+    //         startLong: userPos.lng,
+    //         endLat: destpos.lat,
+    //         endLong: destpos.lng,
+    //         startTime: new Date()
+    //     }
+    //     const data = await postBookingDTO(bookingDTO);
+    // }
+    const createBooking = async () => {
+        const userData = await getUserLocation();
+        const pos = { lat: userData.latitude, lng: userData.longitude };
+        setUserPos(pos);
+
+        const bookingDTO = {
+            userId: userId,
+            startLat: pos.lat,
+            startLong: pos.lng,
+            endLat: destpos.lat,
+            endLong: destpos.lng,
+            startTime: new Date(),
+        };
+        const data = await postBookingDTO(bookingDTO);
+        return data;
+    };
+    const handleAddBooking = async () => {
+        //sethello();
+        await createBooking();
         fetchCurentBooking();
         setShowBooking(true);
     }
     const fetchUserLocation = async () => {
         const data = await getUserLocation();
-        setUserPos(data);
-        return userPos;
+        const pos =
+        {
+            lat: data.latitude,
+            lng: data.longitude
+        }
+        setUserPos(pos);
+        // console.log(userPos);
+        return pos;
 
     }
     // const fetchNearestCab = async () => {
@@ -89,18 +140,19 @@ export default function Home() {
                     <h3>Driver</h3>
                     <p><b>Name:</b> {booking.cab?.driver?.driverName}</p>
                     <p><b>Mobile:</b> {booking.cab?.driver?.mobileNumber}</p>
+
                 </div>}
             </div>
             <div className="map">
-                <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
+                <MapContainer center={userPos} zoom={ZOOM_LEVEL} ref={mapRef}>
                     <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
-                    <Marker position={center} icon={userIcon}><Popup>You are Here</Popup></Marker>
+                    <Marker position={userPos} icon={userIcon}><Popup>You are Here</Popup></Marker>
                     {cabpos.map((cab) => (
                         <Marker key={cab.id} position={[cab.latitude, cab.longitude]} icon={cabIcon}>
                             <Popup>Cab id: {cab.id}</Popup>
                         </Marker>
                     ))}
-                    <Routing booking={booking} cabpos={cabpos} />
+                    {openBooking && showbooking && <Routing booking={booking} userPos={userPos} />}
                 </MapContainer>
             </div>
         </div >

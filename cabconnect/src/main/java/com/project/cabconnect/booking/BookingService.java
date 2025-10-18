@@ -27,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.cabconnect.cab.CabService;
+import com.project.cabconnect.user.User;
+import com.project.cabconnect.user.UserService;
 
 import jakarta.transaction.Transactional;
 
@@ -37,6 +39,8 @@ public class BookingService {
      BookingRepository bookingRepository;
      @Autowired
      CabService cabService;
+     @Autowired
+     UserService userService;
 
     public Booking addBooking(Booking booking) {
         double  userLat=booking.getUser().getUserLat();
@@ -46,14 +50,23 @@ public class BookingService {
         booking.setStatus(BookingStatus.ON_GOING);
         return bookingRepository.save(booking);
     }
+    public Booking addBooking(BookingDTO bookingDTO)
+    {
+        User user=userService.getUserById(bookingDTO.getUserId());
+        updateBookingStatus(bookingDTO.getUserId(),BookingStatus.COMPLETED);
+        Booking booking=new Booking(user, bookingDTO.getStartLat(), bookingDTO.getStartLong(), bookingDTO.getEndLat(), bookingDTO.getEndLong(), bookingDTO.getStartTime());
+        booking.setCab(cabService.getNearestCab(bookingDTO.getStartLat(),bookingDTO.getStartLong()));
+        booking.setStatus(BookingStatus.ON_GOING);
+        return bookingRepository.save(booking);
 
+    }
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
     }
 
     public Booking getBookingById(int id) {
         return bookingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Booking not found " + id));
     }
 
     public void deleteBooking(int id) {

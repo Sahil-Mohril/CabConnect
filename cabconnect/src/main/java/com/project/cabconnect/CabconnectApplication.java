@@ -1,12 +1,9 @@
 package com.project.cabconnect;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.project.cabconnect.booking.Booking;
 import com.project.cabconnect.booking.BookingService;
 import com.project.cabconnect.cab.Cab;
 import com.project.cabconnect.cab.CabService;
@@ -56,7 +53,7 @@ public class CabconnectApplication {
 		cabService.getCabByVehicleNumber("UP32ES0368");
 		cabService.setStatus(c3, CabStatus.OFFLINE);
 		// System.out.println("CAB ID"+c3.getCabId());
-		cabService.setCabLocation(c3, 12.967619, 79.157799);
+		cabService.setCabLocation(c3, 12.966263, 79.156418);
 		cabService.setCabLocation(c2, 12.972863, 79.163075);
 		cabService.setCabLocation(c1, 12.967123, 79.138513);
 		
@@ -76,11 +73,11 @@ public class CabconnectApplication {
 		 userService.updateUserLocation(u1.getuserId(),12.972560, 79.158891);//prakrit enzo
 		 userService.updateUserLocation(u2.getuserId(), 12.971590, 79.138268);//saksham katpadi jn
 
-    Booking b2 = new Booking(u3, 1.18, 2.56, 1.02, 1.21, LocalDateTime.now(), LocalDateTime.now().plusHours(3));
-	Booking b1 = new Booking(u1, 1.10, 2.56, 1.02, 1.25, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
+    // Booking b2 = new Booking(u3, 1.18, 2.56, 1.02, 1.21, LocalDateTime.now(), LocalDateTime.now().plusHours(3));
+	// Booking b1 = new Booking(u1, 1.10, 2.56, 1.02, 1.25, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
-    bookingService.addBooking(b2);
-	bookingService.addBooking(b1);
+    // bookingService.addBooking(b2);
+	// bookingService.addBooking(b1);
 	userService.updateUserLocation(102,12.966, 79.1571);
 		
 	}
