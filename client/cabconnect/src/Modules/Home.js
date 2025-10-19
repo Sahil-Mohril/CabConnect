@@ -18,10 +18,14 @@ export default function Home() {
     const [center, setCenter] = useState({ lat: 12.968045, lng: 79.156126 });
     const [userPos, setUserPos] = useState({ lat: 0.0, lng: 0.0 });
     const [destpos, setDestPos] = useState({ lat: 12.971590, lng: 79.138268 }) //Katpidi statiton
+    const [startpos, setStartPos] = useState({ lat: 0.0, lng: 0.0 });
     const [cabpos, setcabpos] = useState([]);
     const [openBooking, setOpenBooking] = useState(false);
     const [showbooking, setShowBooking] = useState(false);
+    const [useCurrentLoc, setUseCurrentLoc] = useState(false);
     const [booking, setBooking] = useState({});
+    const [startAddress, setStartAddress] = useState("");
+    const [destAddress, setDestAddress] = useState("");
     const ZOOM_LEVEL = 18;
     const mapRef = useRef();
     // useEffect(() => { fetchCabLocations(); fetchUserLocation(); }, []);
@@ -40,6 +44,11 @@ export default function Home() {
                 map.setView([userPos.lat, userPos.lng], ZOOM_LEVEL);
         }
     }, [userPos]);
+    useEffect(() => {
+        if (destpos.lat !== 0 && destpos.lng !== 0) {
+            console.log("Destination position updated:", destpos);
+        }
+    }, [destpos]);
     const cabIcon = new L.Icon({
         iconUrl: CarLogo,
         iconSize: [45, 35],
@@ -73,17 +82,22 @@ export default function Home() {
     //     }
     //     const data = await postBookingDTO(bookingDTO);
     // }
-    const createBooking = async () => {
-        const userData = await getUserLocation();
-        const pos = { lat: userData.latitude, lng: userData.longitude };
+    const createBooking = async (destination, startLocation) => {
+        // const userData = await getUserLocation();
+        // if (!useCurrentLoc) {
+        //     //setStartPos(handleStartGeocode());
+        //     console.log("Start loc", startpos.lat, startpos.lng);
+        // }
+        const pos = startLocation || userPos;
+        // const pos = { lat: userData.latitude, lng: userData.longitude };
         setUserPos(pos);
 
         const bookingDTO = {
             userId: userId,
             startLat: pos.lat,
             startLong: pos.lng,
-            endLat: destpos.lat,
-            endLong: destpos.lng,
+            endLat: destination.lat,
+            endLong: destination.lng,
             startTime: new Date(),
         };
         const data = await postBookingDTO(bookingDTO);
@@ -91,7 +105,14 @@ export default function Home() {
     };
     const handleAddBooking = async () => {
         //sethello();
-        await createBooking();
+        let startLocation;
+        const destination = await handleDestGeocode();
+        if (useCurrentLoc) {
+            startLocation = userPos;
+        } else {
+            startLocation = await handleStartGeocode();
+        }
+        await createBooking(destination, startLocation);
         fetchCurentBooking();
         setShowBooking(true);
     }
@@ -107,6 +128,54 @@ export default function Home() {
         return pos;
 
     }
+    const useCurrentLocation = () => {
+        setUseCurrentLoc(true);
+        setStartAddress("Use Current Location");
+
+    }
+    const handleDestGeocode = async () => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destAddress)}`
+            );
+            const data = await response.json();
+
+            if (data.length > 0) {
+                const { lat, lon } = data[0];
+                const pos = { lat: parseFloat(lat), lng: parseFloat(lon) };
+                setDestPos(pos);
+                return pos;
+            } else {
+                console.log("Address not found");
+                return destpos;
+            }
+        } catch (err) {
+            console.log("Error fetching location");
+            return destpos;
+        }
+    };
+    const handleStartGeocode = async () => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(startAddress)}`
+            );
+            const data = await response.json();
+
+            if (data.length > 0) {
+                const { lat, lon } = data[0];
+                const pos = { lat: parseFloat(lat), lng: parseFloat(lon) };
+                console.log("pos", pos);
+                setStartPos(pos);
+                return pos;
+            } else {
+                console.log("Address not found");
+                return userPos;
+            }
+        } catch (err) {
+            console.log("Error fetching location");
+            return userPos;
+        }
+    };
     // const fetchNearestCab = async () => {
     //     const data = await getNearestCab();
     // }
@@ -122,9 +191,12 @@ export default function Home() {
                 {!openBooking && <div className="button" onClick={() => { setOpenBooking(true) }} ><p>Book a Ride</p></div>}
                 {openBooking && <div className="booking-window">
                     <label>Pickup Location</label><br />
-                    <input type="text" name="start_loc"></input><br />
+                    <input type="text" name="start_loc" value={startAddress} onChange={(e) => setStartAddress(e.target.value)}></input>
+                    <button className="currentLocation" onClick={useCurrentLocation}></button><br />
                     <label>Drop Location</label><br />
-                    <input type="text" name="end_loc"></input><br />
+                    <input type="text" name="end_loc" value={destAddress} onChange={(e) => setDestAddress(e.target.value)}></input><br />
+                    {/* {console.log(useCurrentLoc)} */}
+                    <p>{startAddress}-{destAddress}</p>
 
                 </div>}
                 {openBooking && <div className="search-button" onClick={handleAddBooking}><p>Book Cab</p></div>}

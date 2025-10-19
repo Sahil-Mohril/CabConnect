@@ -22,6 +22,7 @@ export default function GeoCoderExample() {
         } catch (err) {
             setError("Error fetching location");
         }
+        console.log(position);
     };
 
     return (
