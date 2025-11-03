@@ -1,6 +1,7 @@
 package com.project.cabconnect.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,15 @@ public class UserService {
     public User getUserById(int userId)
     {
         return userRepository.findByUserId(userId);
+    }
+    public User verifyUser(String email, String password) {
+        Optional<User> existingUser = userRepository.findByEmailId(email);
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (user.getUserPassword().equals(password)) {
+                return user; 
+            }
+        }
+        return null; 
     }
 }

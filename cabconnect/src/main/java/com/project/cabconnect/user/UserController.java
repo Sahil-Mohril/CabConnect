@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,15 @@ public class UserController {
         User user=userRepository.findByUserId(id);
         LocationDTO location=new LocationDTO(user.getUserLat(),user.getUserLong());
         return ResponseEntity.ok(location);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+        User user = userService.verifyUser(loginDTO.getEmailId(), loginDTO.getPassword());
+        if (user != null) {
+            return ResponseEntity.ok(user); // return user info if valid
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
     }
 
 }

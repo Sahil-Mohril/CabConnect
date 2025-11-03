@@ -1,5 +1,8 @@
 package com.project.cabconnect.routing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.project.cabconnect.routing.*;
-import com.project.cabconnect.booking.*;
+import com.project.cabconnect.booking.Booking;
+import com.project.cabconnect.booking.BookingRepository;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -52,7 +53,7 @@ public class RoutingController {
     @GetMapping("/{bookingId}/route")
     public ResponseEntity<List<Routing>> getRoutebyId(@PathVariable int bookingId)
     {
-        return ResponseEntity.ok(routingService.getRouteById(2702));
+        return ResponseEntity.ok(routingService.getRouteById(bookingId));
     }
     
 }

@@ -18,6 +18,8 @@ export default function Routing({ booking, userPos }) {
     const cablong = booking?.cab?.longitude;
     const userlat = userPos?.lat;
     const userLong = userPos?.lng;
+    const bookingId = booking?.bookingId;
+    console.log("booking id", bookingId);
     //console.log(cablat, cablong);
     useEffect(() => {
         if (!map) return;
@@ -52,8 +54,8 @@ export default function Routing({ booking, userPos }) {
             setRoute(coordinates);
             console.log(routingControlRef.current);
             if (booking) {
-                const routeinfo = coordinates.map((coord, index) => ({ bookingId: 2702, waypoint: index, Lat: coord.lat, Lng: coord.lng }))
-                console.log(routeinfo);
+                const routeinfo = coordinates.map((coord, index) => ({ bookingId: bookingId, waypoint: index, Lat: coord.lat, Lng: coord.lng }))
+                console.log("routeinfo ", routeinfo);
                 try {
                     const response = await axios.post("http://localhost:8080/route", routeinfo);
                 }

@@ -58,4 +58,8 @@ public class User {
     {
         return this.userLong;
     }
+    public String getUserPassword()
+    {
+        return this.userPassword;
+    }
 }

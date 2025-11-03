@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container for login form */
+.credentials {
+    background-color: #2a2a40;
+    border: 1px solid #6ece33;
+    border-radius: 16px;
+    padding: 40px 60px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    min-height: 400px;
+}
+
+/* Optional logo section */
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 180px;
+    height: auto;
+}
+
+/* Login form layout */
+form.login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Input fields */
+.uid,
+.password {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+label {
+    font-size: 1rem;
+    color: #6ece33;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #6ece33;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #aaff66;
+    box-shadow: 0 0 6px #6ece33;
+}
+
+/* Login button */
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.login {
+    width: 100%;
+    padding: 12px;
+    background-color: #6ece33;
+    color: #1e1e2f;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button.login:hover {
+    background-color: #8fff4f;
+    transform: scale(1.02);
+}
+
+/* Create Account section */
+.signup {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.signup p {
+    color: #ffffffcc;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.signup p:hover {
+    color: #6ece33;
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 500px) {
+    .credentials {
+        width: 90%;
+        padding: 30px;
+    }
+
+    button.login {
+        font-size: 1rem;
+    }
+}

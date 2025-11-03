@@ -8,15 +8,17 @@ import NavBar from './Modules/Navbar';
 import Home from './Modules/Home';
 import Routing from './Modules/Routing';
 import Map from './Modules/Map';
-import Geocode from './Modules/Geocode'
+import Geocode from './Modules/Geocode';
+//import Login from './Modules/login';
 
 function App() {
   return (<>
     <NavBar />
     <Home />
+    {/* <Login /> */}
     {/* <Geocode /> */}
     {/* <Routing /> */}
-    {/* <AdminPage /> */}
+    {/* {<AdminPage />} */}
     {/* <Map /> */}
   </>
   );

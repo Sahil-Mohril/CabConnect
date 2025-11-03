@@ -40,13 +40,18 @@ public class CabconnectApplication {
 		driverService.addDriver(d2);
 		Driver d3=new Driver("Siddhant Mohril", 25, "UP324ST2300", "+91 9912324224");
 		driverService.addDriver(d3);
+		Driver d4=new Driver("Amogh Mohril", 25, "UP3242122300", "+91 99122124224");
+		driverService.addDriver(d4);
+		
 
 		Cab c1=new Cab("UP32NK5956","Swift Dezire",5,d1);
 		Cab c2=new Cab("UP32ES0368","Hyundai i20",5,d2);
 		Cab c3=new Cab("MP04AB4564","Toyota Innova",7,d3,CabStatus.BOOKED);
+		Cab c4=new Cab("UP32ES0434","Hyundai i20",5,d4);
 		c1=cabService.addCab(c1);
 		c2=cabService.addCab(c2);
 		c3=cabService.addCab(c3);
+		c4=cabService.addCab(c4);
 		//cabService.addCab(new Cab("UP32BH7879","Maruti WagonR",5,2123));
 		//cabService.getByDriverId(1234);
 		cabService.getCabById(302);
