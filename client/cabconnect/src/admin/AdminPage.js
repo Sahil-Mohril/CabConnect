@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { getCabs, getDrivers, addCab } from "../services/CabController";
+import { getCabs, getDrivers, addCab, getUsers, getLogs } from "../services/CabController.js";
 import "./AdminPage.css";
 
 export default function AdminPage() {
     const [activeTab, setActiveTab] = useState("bookings");
     const [cabs, setCabs] = useState([]);
     const [drivers, setDrivers] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [logs, setLogs] = useState([]);
     const [newCab, setNewCab] = useState({ "VehicleNumber": "", "model": "", "seats": 0, "driver": { "driverId": 0 } })
     useEffect(() => {
         fetchCabs();
         fetchDrivers();
+        fetchUsers();
+        fetchLogs();
     }, []);
 
     const fetchCabs = async () => {
@@ -24,6 +28,14 @@ export default function AdminPage() {
     const handleAddCab = async (cab) => {
         await addCab(cab);
 
+    }
+    const fetchUsers = async () => {
+        const response = await getUsers();
+        setUsers(response.data);
+    }
+    const fetchLogs = async () => {
+        const response = await getLogs();
+        setLogs(response.data);
     }
 
     return (
@@ -85,7 +97,7 @@ export default function AdminPage() {
                         </table>
 
                     </div>
-                        <div className="add-card">
+                        {/* <div className="add-card">
                             <label htmlFor="vehicleNumber"><h3>Vehicle Number</h3></label><br />
                             <input type="text" id="vehicleNumber" value={newCab.vehicleNumber} onChange={(e) => setNewCab({ ...newCab, vehicleNumber: e.target.value })} />
                             <label htmlFor="model"><h3>Model</h3></label><br />
@@ -95,10 +107,41 @@ export default function AdminPage() {
                             <label htmlFor="DriverId"><h3>Driver Id</h3></label><br />
                             <input type="text" id="driverId" value={newCab.driverId} onChange={(e) => setNewCab({ ...newCab, driverId: e.target.value })} />
                             <div className="add-button" onClick={() => handleAddCab(newCab)}>Add Cab</div>
-                        </div>
+                        </div> */}
 
                     </>
                 )}
+
+                {activeTab === "bookings" && (
+                    <div className="card">
+                        <h3>Booking Logs</h3>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>User Name</th>
+                                    <th>Vehicle Number</th>
+                                    <th>Driver Name</th>
+                                    <th>Start (Lat, Long)</th>
+                                    <th>End (Lat, Long)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {logs.map((log) => (
+                                    <tr key={log.bookingId}>
+                                        <td>{log.bookingId}</td>
+                                        <td>{log.user?.userName}</td>
+                                        <td>{log.cab?.vehicleNumber}</td>
+                                        <td>{log.cab?.driver?.driverName}</td>
+                                        <td>{`${log.startLat}, ${log.startLong}`}</td>
+                                        <td>{`${log.endLat}, ${log.endLong}`}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
                 {activeTab === "drivers" && (
                     <div className="card">
                         <h3>Drivers</h3>
@@ -128,9 +171,31 @@ export default function AdminPage() {
                 )}
                 {activeTab === "users" && (
                     <div className="card">
-
+                        <h3>Users</h3>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user) => (
+                                    <tr key={user.userId}>
+                                        <td>{user.userId}</td>
+                                        <td>{user.userName}</td>
+                                        <td>{user.emailId}</td>
+                                        <td>{user.userMobileNumber}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 )}
+
+
             </main>
         </div>
     );

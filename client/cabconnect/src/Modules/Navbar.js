@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import logo2 from './logo2.png';
+import { useLocation } from "react-router-dom";
 //import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export default function NavBar() {
     const [profileopen, showprofile] = useState(false);
-
+    const location = useLocation();
+    const { userName, userId } = location.state || {};
 
     return <>
         <div className="Navbar">
@@ -20,7 +22,7 @@ export default function NavBar() {
                 <h3>Profile</h3>
             </div>
             <div className="profile-pic"><img src="profile3.jpg" /> </div>
-            <p className="user-name">Sahil Mohril</p>
+            <p className="user-name">{userName}</p>
             <hr className="l1" width="100%" size="1" />
 
         </div>}

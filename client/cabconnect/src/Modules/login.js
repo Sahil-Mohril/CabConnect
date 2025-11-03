@@ -23,12 +23,17 @@ export default function Login() {
 
         if (response.ok) {
             const user = await response.json();
-            console.log("✅ Login successful:", user);
-            navigate("/home"); // redirect to home page
+            console.log("Login successful:", user);
+            navigate("/home", { state: { userName: user.userName, userId: user.userId } });
         } else {
             setError("Invalid email or password");
         }
     }
+
+    // ✅ New handler for admin login
+    const handleAdminLogin = () => {
+        navigate("/admin"); // make sure your route exists in App.js
+    };
 
     return (
         <div className="credentials">
@@ -59,10 +64,19 @@ export default function Login() {
                 <div className="button">
                     <button type="submit" className="login">Login</button>
                 </div>
-                {error && <p className="error">{error}</p>}
-                <div className="signup">
-                    <p>Create Account</p>
+
+                {/* ✅ Admin login button */}
+                <div className="admin-login">
+                    <button
+                        type="button"
+                        className="admin-btn"
+                        onClick={handleAdminLogin}
+                    >
+                        Admin Login
+                    </button>
                 </div>
+
+                {error && <p className="error">{error}</p>}
             </form>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useMap } from "react-leaflet";
 import logo from './logo.png'
 import CarLogo from './car.png';
+// import '../styles/style.css'
 import UserLocation from './userlocation.png';
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import osm from "./osm-providers.js";
@@ -11,10 +12,13 @@ import { getCabLocations } from "../services/CabController.js";
 import { getCurrentBooking, postBookingDTO } from "../services/BookingController.js";
 import { getUserLocation } from "../services/UserController.js";
 import Routing from "./Routing.js";
+import { useLocation } from "react-router-dom";
 //import Routing from "./Routing.js";
 //import style from './styles/style.css'
 export default function Home() {
-    const userId = 504;
+    //const userId = 504;
+     const location = useLocation();
+  const { userName, userId } = location.state || {};
     const [center, setCenter] = useState({ lat: 12.968045, lng: 79.156126 });
     const [userPos, setUserPos] = useState({ lat: 0.0, lng: 0.0 });
     const [destpos, setDestPos] = useState({ lat: 12.971590, lng: 79.138268 }) //Katpidi statiton
@@ -143,7 +147,7 @@ export default function Home() {
     setEstimatedPrice(price.toFixed(2));
     }
     const fetchUserLocation = async () => {
-        const data = await getUserLocation();
+        const data = await getUserLocation(userId);
         const pos =
         {
             lat: data.latitude,
@@ -222,7 +226,7 @@ export default function Home() {
                     <label>Drop Location</label><br />
                     <input type="text" name="end_loc" value={destAddress} onChange={(e) => setDestAddress(e.target.value)}></input><br />
                     {/* {console.log(useCurrentLoc)} */}
-                    {/* <p>{startAddress}-{destAddress}</p> */}
+                    <p>{userId}-{userName}</p>
 
                 </div>}
                 {openBooking && <div className="search-button" onClick={handleAddBooking}><p>Book Cab</p></div>}
